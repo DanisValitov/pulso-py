@@ -23,9 +23,11 @@ while True:
         data += server_socket.recv(4 * 1024)
     frame_data = data[:msg_size]
     data = data[msg_size:]
-    frame = pickle.loads(frame_data)
-
-    image = cv2.imdecode(frame, cv2.IMREAD_GRAYSCALE)
+    try:
+        frame = pickle.loads(frame_data)
+        image = cv2.imdecode(frame, cv2.IMREAD_GRAYSCALE)
+    except:
+        print("failed to operate frame")
 
     # server_socket.sendto(message, address) todo send answer?
     # cv2.imshow("RECEIVING VIDEO", image)
