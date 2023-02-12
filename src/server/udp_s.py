@@ -9,7 +9,7 @@ payload_size = struct.calcsize("Q")
 while True:
     data = b""
     while len(data) < payload_size:
-        packet, address = server_socket.recvfrom(4 * 1024)  # 4K
+        packet, address = server_socket.recvfrom(1024)  # 4K
         # packet, address = server_socket.recvfrom(1024)  # 4K  todo add auth
         if not packet:
             break
@@ -18,11 +18,9 @@ while True:
     data = data[payload_size:]
     msg_size = struct.unpack("Q", packed_msg_size)[0]
     print("msg_size: ", msg_size, "from: ", address)
-    if msg_size > 1024 * 4:
-        print("skip")
-        continue
+
     while len(data) < msg_size:
-        data += server_socket.recv(4 * 1024)
+        data += server_socket.recv(1024)
     frame_data = data[:msg_size]
     data = data[msg_size:]
     try:
