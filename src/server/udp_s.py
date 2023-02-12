@@ -7,7 +7,6 @@ server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server_socket.bind(('', 4444))
 payload_size = struct.calcsize("Q")
 while True:
-    data = b""
 
     while len(data) < payload_size:
         packet, address = server_socket.recvfrom(4 * 1024)  # 4K
@@ -19,7 +18,9 @@ while True:
     data = data[payload_size:]
     msg_size = struct.unpack("Q", packed_msg_size)[0]
     print("msg_size: ", msg_size, "from: ", address)
-
+    if msg_size > 1024 * 4:
+        print("skip")
+        continue
     while len(data) < msg_size:
         data += server_socket.recv(4 * 1024)
     frame_data = data[:msg_size]
