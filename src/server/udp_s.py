@@ -2,9 +2,6 @@ import socket, cv2, pickle, struct
 import pickle
 import socket
 import struct
-import time
-from datetime import datetime
-
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server_socket.bind(('', 4444))
@@ -18,19 +15,16 @@ while True:
             pos = packet.decode("utf-8")
             # print(pos)
             if pos == "PT":
-                # print("stop")
+                print("stop")
                 break
-            # elif (pos) == "PH":
+            elif (pos) == "PH":
                 # header_received = True
-                # print("start")
+                print("start")
             else:
                 data += packet
         else:
             data += packet
-
-    date_time = datetime.fromtimestamp(time.time())
-
-    print(date_time, "data len: ", len(data))
+    print("data len: ", len(data))
     try:
         frame = pickle.loads(data)
         image = cv2.imdecode(frame, cv2.IMREAD_GRAYSCALE)
