@@ -26,10 +26,11 @@ while True:
     try:
         frame = pickle.loads(frame_data)
         image = cv2.imdecode(frame, cv2.IMREAD_GRAYSCALE)
+        server_socket.sendto(str.encode("ok"), address)
     except:
         print("failed to operate frame")
+        server_socket.sendto(str.encode("bad"), address)
 
-    server_socket.sendto(str.encode("ok"), address)
     # cv2.imshow("RECEIVING VIDEO", image)
     if cv2.waitKey(10) & 0xFF == ord('q'):
         break

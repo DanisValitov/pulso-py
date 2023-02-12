@@ -11,14 +11,14 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 client_socket.settimeout(1.0)
 addr = ("127.0.0.1", 4444)
 
-try:
-    with open('../../conf/server.csv', newline='') as csvfile:
-        reader = csv.reader(csvfile, delimiter=';')
-        headers = next(reader, None)
-        conf = next(reader, None)
-        addr = (conf[0], int(conf[1]))
-except:
-    print("no conf found, using default")
+# try:
+#     with open('../../conf/server.csv', newline='') as csvfile:
+#         reader = csv.reader(csvfile, delimiter=';')
+#         headers = next(reader, None)
+#         conf = next(reader, None)
+#         addr = (conf[0], int(conf[1]))
+# except:
+#     print("no conf found, using default")
 
 print(addr)
 BUFSIZE = 1024
@@ -45,9 +45,11 @@ while True:
         data, server = client_socket.recvfrom(2)
         end = time.time()
         elapsed = end - start
-        print(f'{length} {elapsed}')
+        dec = data.decode("utf-8")
+        print(f'{dec} {elapsed}')
     except socket.timeout:
         print('REQUEST TIMED OUT')
+
     cv2.imshow('frame', frame)
 
     # the 'q' button is set as the
