@@ -5,9 +5,10 @@ import struct
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server_socket.bind(('', 4444))
-data = b""
 payload_size = struct.calcsize("Q")
 while True:
+    data = b""
+
     while len(data) < payload_size:
         packet, address = server_socket.recvfrom(4 * 1024)  # 4K
         # packet, address = server_socket.recvfrom(1024)  # 4K  todo add auth
@@ -29,7 +30,7 @@ while True:
     except:
         print("failed to operate frame")
 
-    # server_socket.sendto(message, address) todo send answer?
+    server_socket.sendto(str.encode("ok"), address)
     # cv2.imshow("RECEIVING VIDEO", image)
     if cv2.waitKey(10) & 0xFF == ord('q'):
         break
