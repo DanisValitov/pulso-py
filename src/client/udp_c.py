@@ -14,14 +14,14 @@ client_socket.settimeout(1.0)
 addr = ("127.0.0.1", 4444)
 
 #
-try:
-    with open('../../conf/server.csv', newline='') as csvfile:
-        reader = csv.reader(csvfile, delimiter=';')
-        headers = next(reader, None)
-        conf = next(reader, None)
-        addr = (conf[0], int(conf[1]))
-except:
-    print("no conf found, using default")
+# try:
+#     with open('../../conf/server.csv', newline='') as csvfile:
+#         reader = csv.reader(csvfile, delimiter=';')
+#         headers = next(reader, None)
+#         conf = next(reader, None)
+#         addr = (conf[0], int(conf[1]))
+# except:
+#     print("no conf found, using default")
 
 print(addr)
 BUFSIZE = 1024
@@ -47,10 +47,11 @@ while True:
     client_socket.sendto(str.encode("PT"), addr)
 
     try:
-        data, server = client_socket.recvfrom(3)
+        # data, server = client_socket.recvfrom(3)
         end = time.time()
         elapsed = end - start
-        dec = data.decode("utf-8")
+        # dec = data.decode("utf-8")
+        dec = "ok"
         print(f'{dec} {elapsed}')
         cv2.imshow('frame', frame)
     except socket.timeout:
