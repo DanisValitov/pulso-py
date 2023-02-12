@@ -4,7 +4,7 @@ import socket
 import struct
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-server_socket.bind(('', 12000))
+server_socket.bind(('', 4444))
 data = b""
 payload_size = struct.calcsize("Q")
 while True:
