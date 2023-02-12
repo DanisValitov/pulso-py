@@ -7,7 +7,7 @@ server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server_socket.bind(('', 4444))
 payload_size = struct.calcsize("Q")
 while True:
-
+    data = b""
     while len(data) < payload_size:
         packet, address = server_socket.recvfrom(4 * 1024)  # 4K
         # packet, address = server_socket.recvfrom(1024)  # 4K  todo add auth
